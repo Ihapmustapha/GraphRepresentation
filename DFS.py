@@ -1,14 +1,19 @@
 from Graph import *
 
 
-def depth_first(graph, visited, current=0):
-    if visited[current] == 1:
-        return
-    visited[current] =1
-    print('visit: ', current)
+def depth_first(graph, start=0, end=1):
 
-    for vertex in graph.get_adjacent_vertices(current):
-        depth_first(graph, visited, vertex)
+    
+    stack = list()
+
+    stack = [(start, [start])]
+    while stack:
+        (node,path) = stack.pop()
+        for next in (set(graph.get_adjacent_vertices(node))-set(path)):
+            if next == end:
+                print("possible path:", path + [next])
+            else:
+                stack.append((next, path + [next]))
 
 
 
@@ -31,4 +36,4 @@ g.add_edge(3,4)
 g.add_edge(6,8)
 
 visited = np.zeros(g.numVertices)
-depth_first(g,visited)
+depth_first(g,0,5)
