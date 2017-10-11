@@ -25,6 +25,18 @@ def breadth_first(graph,start=0,end=0):
                 if visited[v]!=1:
                     queue.put(v)
 
+def bfs_paths(graph, start, goal):
+    arr = []
+    queue = [(start, [start])]
+    while queue:
+        (vertex, path) = queue.pop(0)
+        for next in set(graph.get_adjacent_vertices(vertex)) - set(path):
+            if next == goal:
+                arr.append(list(path + [next]))
+            else:
+                queue.append((next, path + [next]))
+    return arr
+
 
 ####################################################
 ##################~~Testing~~#######################
@@ -44,3 +56,4 @@ g.add_edge(3,4)
 g.add_edge(6,8)
 
 breadth_first(g, 2, 8)
+print(bfs_paths(g,2,8))
